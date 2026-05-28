@@ -62,23 +62,12 @@ export default function Footer() {
           
           {/* Logo & Description Column (Span 4) */}
           <div className="lg:col-span-4 flex flex-col items-start text-left font-body">
-            <a href="#home" className="flex items-center gap-2 mb-6 group">
-              <div className="relative w-8 h-8 flex items-center justify-center bg-transparent border-2 border-white rounded-lg transition-transform duration-300 group-hover:rotate-6">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  className="w-5 h-5 text-white"
-                >
-                  <path d="M4 20L12 4L20 20" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M9 12H15" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M12 4V20" strokeDasharray="1.5 1.5" opacity="0.6" />
-                </svg>
-              </div>
-              <span className="font-display font-black text-xl tracking-tight text-white">
-                ARKO
-              </span>
+            <a href="#home" className="flex items-center mb-2 -ml-6 group">
+              <img 
+                src="/images/logo.png" 
+                alt="ARKO Logo" 
+                className="h-28 w-auto object-contain brightness-0 invert transition-transform duration-300 group-hover:scale-[1.05]"
+              />
             </a>
             
             <p className="text-sm font-light leading-relaxed mb-8 max-w-xs text-white/40">

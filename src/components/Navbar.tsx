@@ -37,9 +37,9 @@ export default function Navbar({ onLogoClick, onNavClick }: NavbarProps) {
   return (
     <>
       <nav
-        className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 py-6 px-6 md:px-12 ${
+        className={`fixed w-full top-0 left-0 z-50 transition-all duration-500 py-4 md:py-6 px-4 md:px-12 ${
           isScrolled || isMenuOpen
-            ? 'bg-[#EAE6E1]/90 backdrop-blur-md border-b border-warm-dark/5 shadow-sm'
+            ? 'bg-[#EAE6E1]/95 backdrop-blur-sm border-b border-warm-dark/5 shadow-sm'
             : 'bg-transparent'
         }`}
       >
@@ -52,25 +52,14 @@ export default function Navbar({ onLogoClick, onNavClick }: NavbarProps) {
               setIsMenuOpen(false);
               if (onLogoClick) onLogoClick();
             }}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center group -ml-4 md:-ml-6"
           >
-            <div className="relative w-9.5 h-9.5 flex items-center justify-center bg-transparent border-2 border-warm-dark rounded-lg transition-transform duration-300 group-hover:rotate-6">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                className="w-5.5 h-5.5 text-warm-dark"
-              >
-                {/* Monogram A with architectural layout feel */}
-                <path d="M4 20L12 4L20 20" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M9 12H15" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M12 4V20" strokeDasharray="1.5 1.5" opacity="0.6" />
-              </svg>
-            </div>
-            <span className="font-display font-black text-2xl tracking-tight text-warm-dark">
-              ARKO
-            </span>
+            <img 
+              src="/images/logo.png" 
+              alt="ARKO Logo" 
+              className="h-16 md:h-28 w-auto object-contain my-[-16px] md:my-[-36px] transition-transform duration-300 group-hover:scale-[1.05]"
+              style={{ imageRendering: 'auto' }}
+            />
           </a>
 
           {/* Central Pill Nav Links - Desktop */}
@@ -116,7 +105,7 @@ export default function Navbar({ onLogoClick, onNavClick }: NavbarProps) {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex md:hidden items-center justify-center p-2.5 rounded-full border border-warm-dark/10 bg-white text-warm-dark hover:bg-warm-dark/5 transition-all duration-250 cursor-pointer shadow-sm z-50"
+            className="flex md:hidden items-center justify-center p-2.5 rounded-full border border-warm-dark/10 bg-white text-warm-dark hover:bg-warm-dark/5 transition-all duration-250 cursor-pointer shadow-sm z-50 outline-none focus:outline-none focus:ring-0"
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

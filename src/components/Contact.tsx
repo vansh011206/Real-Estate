@@ -127,6 +127,7 @@ export default function Contact() {
   const budgetRanges = ["Under ₹50L", "₹50L–1Cr", "₹1Cr–3Cr", "Above ₹3Cr"];
 
   const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || '918882675336';
+  const whatsappMessage = encodeURIComponent("Hi ARKO Studio, I am interested in your premium properties. Please share more details.");
 
   return (
     <section
@@ -180,7 +181,7 @@ export default function Contact() {
               {/* WhatsApp Contact CTA */}
               <div className="mt-8 pt-6 border-t border-white/5">
                 <a
-                  href={`https://wa.me/${whatsappPhone}`}
+                  href={`https://wa.me/${whatsappPhone}?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20ba56] text-white font-display font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all duration-300 shadow-sm cursor-pointer"
