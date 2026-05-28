@@ -13,12 +13,15 @@ import Contact from '@/components/Contact';
 import ProjectDetail from '@/components/ProjectDetail';
 import PartnersPage from '@/components/PartnersPage';
 import ProjectsPage from '@/components/ProjectsPage';
+import { PROJECTS_DATA } from '@/constants/projectsData';
 
 type ViewType = 'home' | 'project-detail' | 'partners' | 'projects-page';
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<ViewType>('home');
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [prefilledMessage, setPrefilledMessage] = useState('');
+  const [prefilledProjectType, setPrefilledProjectType] = useState('');
 
   const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || '918882675336';
   const whatsappMessage = encodeURIComponent("Hi ARKO Studio, I am interested in your premium properties. Please share more details.");
@@ -41,6 +44,41 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
+  const handleBookSimilar = (projectId: string) => {
+    const project = PROJECTS_DATA[projectId];
+    if (project) {
+      // Map category to projectType dropdown
+      let mappedType = 'Other';
+      if (project.category === 'Residential' || project.category === 'Sustainable') {
+        mappedType = 'Custom Home';
+      } else if (project.category === 'Renovation') {
+        mappedType = 'Renovation';
+      } else if (project.category === 'Interior') {
+        mappedType = 'Interior Design';
+      }
+      
+      setPrefilledProjectType(mappedType);
+      setPrefilledMessage(`Hi ARKO Studio, I am interested in booking a project similar to "${project.name}" (${project.type}) located in ${project.location}. Please get in touch with me.`);
+    }
+
+    setCurrentView('home');
+    setSelectedProjectId(null);
+
+    // Smooth scroll helper checking for element to mount
+    const startTime = Date.now();
+    const checkExist = setInterval(() => {
+      const el = document.getElementById("contact");
+      if (el) {
+        clearInterval(checkExist);
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else if (Date.now() - startTime > 2000) {
+        clearInterval(checkExist);
+      }
+    }, 50);
+  };
+
   const handleNavClick = (name: string) => {
     if (name === 'HOME') {
       handleBackToHome();
@@ -53,11 +91,21 @@ export default function Home() {
       setSelectedProjectId(null);
       window.scrollTo({ top: 0, behavior: 'instant' });
     } else if (name === 'CONTACT') {
+      setPrefilledMessage('');
+      setPrefilledProjectType('');
       handleBackToHome();
-      setTimeout(() => {
+      const startTime = Date.now();
+      const checkExist = setInterval(() => {
         const el = document.getElementById("contact");
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
+        if (el) {
+          clearInterval(checkExist);
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        } else if (Date.now() - startTime > 2000) {
+          clearInterval(checkExist);
+        }
+      }, 50);
     }
   };
 
@@ -100,7 +148,10 @@ export default function Home() {
             <Partners />
 
             {/* Contact [06] */}
-            <Contact />
+            <Contact 
+              prefilledMessage={prefilledMessage}
+              prefilledProjectType={prefilledProjectType}
+            />
           </motion.div>
         )}
 
@@ -118,6 +169,7 @@ export default function Home() {
             <ProjectDetail
               projectId={selectedProjectId}
               onBack={handleBackToProjects}
+              onBookSimilar={handleBookSimilar}
             />
           </motion.div>
         )}

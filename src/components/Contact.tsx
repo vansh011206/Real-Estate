@@ -66,7 +66,12 @@ function CustomSelect({ value, options, placeholder, onChange }: CustomSelectPro
   );
 }
 
-export default function Contact() {
+interface ContactProps {
+  prefilledMessage?: string;
+  prefilledProjectType?: string;
+}
+
+export default function Contact({ prefilledMessage = '', prefilledProjectType = '' }: ContactProps = {}) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -75,6 +80,16 @@ export default function Contact() {
     budget: '',
     message: ''
   });
+
+  useEffect(() => {
+    if (prefilledMessage || prefilledProjectType) {
+      setFormData(prev => ({
+        ...prev,
+        message: prefilledMessage || prev.message,
+        projectType: prefilledProjectType || prev.projectType
+      }));
+    }
+  }, [prefilledMessage, prefilledProjectType]);
 
   const [status, setStatus] = useState<{
     submitting: boolean;

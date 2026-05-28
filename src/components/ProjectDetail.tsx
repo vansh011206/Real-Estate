@@ -7,11 +7,12 @@ import { fetchPexelsImage } from '@/utils/pexels';
 interface ProjectDetailProps {
   projectId: string;
   onBack: () => void;
+  onBookSimilar?: (projectId: string) => void;
 }
 
 import { PROJECTS_DATA } from '@/constants/projectsData';
 
-export default function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
+export default function ProjectDetail({ projectId, onBack, onBookSimilar }: ProjectDetailProps) {
   const project = PROJECTS_DATA[projectId];
 
   // Set up local state for resolved images
@@ -199,28 +200,20 @@ export default function ProjectDetail({ projectId, onBack }: ProjectDetailProps)
             </div>
 
             {/* Book similar project button */}
-            <a
-              href="#contact"
+            <button
               onClick={(e) => {
-                // Smooth scroll to contact section
-                const contactEl = document.getElementById("contact");
-                if (contactEl) {
-                  // If we need to go back to home, we can do so. But wait! Since contact is on the homepage, 
-                  // to book a call, the user should be returned to the homepage and scrolled to the contact section!
-                  // Let's implement that logic nicely.
-                  e.preventDefault();
+                e.preventDefault();
+                if (onBookSimilar) {
+                  onBookSimilar(projectId);
+                } else {
                   onBack();
-                  setTimeout(() => {
-                    const el = document.getElementById("contact");
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
                 }
               }}
-              className="mt-4 w-full bg-[#1a1714] text-white font-medium text-sm rounded-lg py-3.5 flex items-center justify-center gap-2 hover:bg-[#2e2923] transition-colors duration-250 shadow-sm"
+              className="mt-4 w-full bg-[#1a1714] text-white font-medium text-sm rounded-lg py-3.5 flex items-center justify-center gap-2 hover:bg-[#2e2923] transition-colors duration-250 shadow-sm cursor-pointer"
             >
               <span>Book a similar project</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
           </div>
 
         </div>
